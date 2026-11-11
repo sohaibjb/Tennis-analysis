@@ -1,5 +1,11 @@
 # Tennis Match Analysis
 
+<p align="center">
+  <a href="demo/vid1_annotated.mp4">
+    <img src="demo/vid1_highlight.gif" alt="Annotated output highlight" width="720">
+  </a>
+</p>
+
 Turns tennis footage — a recorded video **or** a live stream — into an annotated feed:
 
 - detects and tracks both players (YOLO26 + ByteTrack), ignoring umpire, ball kids and crowd
@@ -9,10 +15,6 @@ Turns tennis footage — a recorded video **or** a live stream — into an annot
 - measures each player's **speed, top speed, average speed and distance covered**
 - detects **hits** and estimates **shot speed**
 - writes an annotated video, per-frame tracks (JSON lines), a shot list (CSV) and a match summary (JSON)
-
-## Output highlight
-
-[![Annotated output highlight](demo/vid1_highlight.gif)](demo/vid1_annotated.mp4)
 
 Click the preview to open the full annotated output video.
 
