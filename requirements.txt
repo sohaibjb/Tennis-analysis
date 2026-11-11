@@ -1,0 +1,7 @@
+ultralytics>=8.4.0       # YOLO26 support
+torch>=2.2
+torchvision>=0.17
+opencv-python>=4.9       # use opencv-python-headless on servers without a display (no --show)
+numpy>=1.24
+pyyaml>=6.0
+lap>=0.5.12             # needed by the Ultralytics ByteTrack / BoT-SORT trackers

@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------- models
+# Put your trained weights in ./weights (or change the paths).
+models:
+  players:                       # Ultralytics YOLO26, trained on players
+    weights: weights/players_yolo26.pt
+    conf: 0.35
+    imgsz: 640
+    classes: null                # null = every class the model has; or e.g. [player] / [person]
+    tracker: bytetrack.yaml      # or botsort.yaml (Ultralytics built-ins)
+    fallback_weights: yolo26s.pt # used if `weights` is missing (public COCO model, auto-downloaded)
+    fallback_classes: [person]
+  ball:                          # Ultralytics YOLO26, trained on the tennis ball
+    weights: weights/ball_yolo26.pt
+    conf: 0.10                   # keep low: small fast object, gaps are interpolated anyway
+    imgsz: 640                  # larger input helps tiny balls; use the size you trained with
+    classes: null
+    fallback_weights: yolo26s.pt # COCO "sports ball": finds the ball far less often than a trained model
+    fallback_classes: [sports ball]
+  keypoints:                     # ResNet50 regressing 14 court points (fc -> 28 outputs)
+    weights: weights/keypoints_resnet50.pth
+    input_size: 224              # input size used in training
+    num_keypoints: 14
+    output: pixels               # "pixels" (coords in the input_size image) or "normalized" (0..1)
+    imagenet_normalize: true
+
+device: auto                     # auto | cuda:0 | cpu | mps
+half: false                      # FP16 on CUDA
+
+# ---------------------------------------------------------------- court / pipeline
+keypoints:
+  every_n_frames: 1              # run the keypoint model every N frames (static camera: 10-30 is fine)
+  smoothing: 0.5                 # EMA on keypoints between frames (1 = no smoothing)
+  ransac_thresh_m: 0.5
+  max_residual_cm: 60            # reject homography fits worse than this
+  order: null                    # optional list remapping your model's output order to tennis/court.py's order
+
+pipeline:
+  lag_frames: 10                 # look-back buffer; output latency = lag / fps (0.33 s at 30 fps)
+  ball_max_gap: 10               # fill ball gaps up to this many frames
+  ball_max_jump_px: 150          # per-frame jump above this is treated as a false detection
+  cut_threshold_px: 40           # keypoints moving more than this = camera cut, trackers reset
+  court_lost_frames: 15          # court fit failing this long = court not visible (close-up, replay)
+
+analysis:
+  position_smoothing: 0.35       # EMA on player court position
+  speed_window_s: 0.17           # speed is measured over this window
+  hit_min_frames: 4              # trend window on each side of a hit = this + 2 frames
+  hit_min_gap_s: 0.45
+  hit_reach: 1.2                 # hit zone around a player box, in box heights
+  hit_min_ball_speed_m: 0.15     # after a hit the ball must travel this far along the court per frame at 30 fps (≈16 km/h)
+  distance_step_m: 0.25          # distance only counts moves beyond this radius (filters box jitter)
+  max_shot_s: 3.5                # longer than this between hits = new rally, no shot speed
+
+# ---------------------------------------------------------------- output
+output_dir: runs
+draw:
+  keypoints: true
+  boxes: true
+  other_people: false            # also draw umpire / ball kids in grey
+  ball_trail: 15
+  mini_court: true
+  mini_court_width: 200          # px at 1280-wide video, scales with resolution
+  stats: true
+  stats_position: bottom-right   # bottom-left / top-left / top-right; keep clear of the broadcast scoreboard

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Local data and generated analysis outputs
+input_videos/*
+runs/*
+
+# Local model weights and training artifacts
+*.pt
+*.pth
+datasets/
+data/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
