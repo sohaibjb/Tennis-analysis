@@ -12,7 +12,7 @@ Turns tennis footage — a recorded video **or** a live stream — into an annot
 
 ## Output highlight
 
-<video src="demo/vid1_annotated.mp4" controls width="720"></video>
+<video src="https://github.com/sohaibjb/Tennis-analysis/raw/refs/heads/main/demo/vid1_annotated.mp4" controls width="720"></video>
 
 [Watch the annotated output video](demo/vid1_annotated.mp4)
 
