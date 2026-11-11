@@ -12,9 +12,9 @@ Turns tennis footage — a recorded video **or** a live stream — into an annot
 
 ## Output highlight
 
-<video src="https://github.com/sohaibjb/Tennis-analysis/raw/refs/heads/main/demo/vid1_annotated.mp4" controls width="720"></video>
+[![Annotated output highlight](demo/vid1_highlight.gif)](demo/vid1_annotated.mp4)
 
-[Watch the annotated output video](demo/vid1_annotated.mp4)
+Click the preview to open the full annotated output video.
 
 ```
 frame ──► YOLO26 players ──► pick 2 players (one per half) ─┐
