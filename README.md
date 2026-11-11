@@ -10,6 +10,12 @@ Turns tennis footage — a recorded video **or** a live stream — into an annot
 - detects **hits** and estimates **shot speed**
 - writes an annotated video, per-frame tracks (JSON lines), a shot list (CSV) and a match summary (JSON)
 
+## Output highlight
+
+<video src="demo/vid1_annotated.mp4" controls width="720"></video>
+
+[Watch the annotated output video](demo/vid1_annotated.mp4)
+
 ```
 frame ──► YOLO26 players ──► pick 2 players (one per half) ─┐
       ├─► YOLO26 ball ─────► outlier filter + gap filling ──┤
@@ -48,9 +54,6 @@ On a server without a screen, replace `opencv-python` with `opencv-python-headle
   python main.py --source input_videos/match.mp4 --court runs/match_court.json
   ```
   The overlay drawn after the 4th click lets you check the fit before saving.
-- Or use the public ResNet50 court model linked in the README of
-  [abdullahtarek/tennis_analysis](https://github.com/abdullahtarek/tennis_analysis) ("tennis court key point model").
-  It has the same format and keypoint order; save it as `weights/keypoints_resnet50.pth`.
 
 **C. Train your own.** `training/README.md` has the datasets and one command per model
 (`training/train_yolo.py` for players and ball, `training/train_keypoints.py` for the court).

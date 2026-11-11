@@ -15,6 +15,10 @@ runs/*
 datasets/
 data/
 
+# Repository demo media
+!demo/
+!demo/vid1_annotated.mp4
+
 # IDE and OS files
 .vscode/
 .idea/
